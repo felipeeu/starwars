@@ -18,16 +18,93 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  padding: 80px 0 80px 0;
+
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 40px;
+  color: #333333;
+}
+
+h2 {
+
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 40px;
+
+
+}
+
+h4 {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 1px;
+  text-align: left;
+}
+
+h5 {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 1px;
+  text-align: left;
+}
+
+
+
+label {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.09px;
+  text-align: left;
+
+}
+
+.clearall {
+  font-family: Arial;
+  font-size: 13.3px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0.800000011920929px;
+  text-align: center;
+  color: #C8C8C8;
+  text-transform: uppercase;
+}
+
+.loadmore {
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 46px;
+  text-align: center;
+  color: #002B53
+}
+
+.p-item {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.p-header {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  letter-spacing: 0.9169999957084656px;
+  color: #666666;
 }
