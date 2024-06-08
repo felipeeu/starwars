@@ -1,17 +1,18 @@
-import { Planet } from "@/app/hooks/useDataRequest";
-import React from "react";
+"use client";
+import useDataRequest, { Planet } from "@/app/hooks/useDataRequest";
 
 interface FilterComponentProps {
   label: string;
-  planets: Planet[];
   defaultValue: string;
+  onChange: () => void;
 }
 
 const FilterComponent: React.FC<FilterComponentProps> = ({
   label,
-  planets,
   defaultValue,
+  onChange,
 }) => {
+  const { planets } = useDataRequest();
   return (
     <div className="flex flex-row font-helvetica-neue border-t border-[#E6E6E6] pt-4 px-[25px] pb-[15px] lg:border-b lg:py-[26px] lg:px-[50px] lg:justify-between">
       <div className="w-full flex flex-row lg:w-auto lg:items-center">
@@ -19,12 +20,17 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
         <select
           defaultValue={defaultValue}
           className="w-full pl-[13px] border-b  border-[#C8C8C8] bg-[white] lg:w-[190px] capitalize"
+          onChange={onChange}
         >
           <option className="capitalize" value={defaultValue}>
             {defaultValue}
           </option>
           {planets.map((planet: Planet) => {
-            return <option key={planet.name}>{planet.name}</option>;
+            return (
+              <option key={planet.name} value={planet.id}>
+                {planet.name}
+              </option>
+            );
           })}
         </select>
       </div>

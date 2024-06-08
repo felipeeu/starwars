@@ -1,17 +1,29 @@
 "use client";
+import { useCallback, useState } from "react";
 import { FilterComponent, ItemList } from "./Components";
-import useDataRequest from "./hooks/useDataRequest";
 
 export default function Home() {
-  const { planets, loading, error } = useDataRequest();
+  const DEFAULT_VALUE = "all";
+  const [selectedPlanet, setSelectedPlanet] = useState(DEFAULT_VALUE);
+
+  const handleChange: any = useCallback(
+    (e: any) => {
+      setSelectedPlanet(e.target.value);
+    },
+    [selectedPlanet]
+  );
   return (
     <main className="">
       <FilterComponent
         label={"Filter By"}
-        planets={planets}
-        defaultValue={"all"}
+        defaultValue={DEFAULT_VALUE}
+        onChange={handleChange}
       />
-      <ItemList />
+      <ItemList
+        title={" All Characters"}
+        selectedPlanet={selectedPlanet}
+        defaultValue={DEFAULT_VALUE}
+      />
     </main>
   );
 }
