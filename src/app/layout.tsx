@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { FilterComponent, Header } from "./Components";
+import { Header } from "./Components";
 
 import "./globals.css";
 
@@ -18,14 +18,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex flex-col bg-white gap-[28px]`}>
+      <body
+        className={`${inter.className} flex flex-col bg-white gap-[28px]`}
+        suppressHydrationWarning={true}
+      >
         <Header
           title={"Star Wars Characters"}
           body={`Lorem ipsum dolor sit amet, consectetur
                 adipiscing elit, sed do eiusmod tempor
                 incididunt ut labore et dolore magna aliqua.`}
         />
-        <FilterComponent label={"Filter By"} />
+
         {children}
       </body>
     </html>
