@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getUrlParams } from "../utils/getUrlParams";
 
 export interface Planet {
   id: string;
@@ -7,21 +6,37 @@ export interface Planet {
   residents: string[];
 }
 
+export interface Person {
+  id: string;
+  name: string;
+  homeworld: string;
+  gender: string;
+  mass: string;
+  height: string;
+  image: string;
+}
+
 const useDataRequest = () => {
   const [planets, setPlanets] = useState<Planet[]>([]);
-  const [page, setPage] = useState<string | null>(null);
+  const [people, setPeople] = useState<Person[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchPlanets("/api?page=1");
-  }, []);
+    const fetchAllData = async () => {
+      setLoading(true);
+      try {
+        await fetchPlanets("/api/?slug=planets&page=1");
+        await fetchPeople("/api/?slug=people&page=1");
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  useEffect(() => {
-    if (page) {
-      fetchPlanets(`/api${page}`);
-    }
-  }, [page]);
+    fetchAllData();
+  }, []);
 
   const fetchPlanets = async (url: string) => {
     try {
@@ -45,10 +60,6 @@ const useDataRequest = () => {
       const planetsData = data.results;
 
       localStorage.setItem("planetsCount", data.count.toString());
-
-      const nextPage = data.next ? getUrlParams(data.next) : null;
-
-      setPage(nextPage);
 
       const enrichedPlanetData: Planet[] =
         planetsData.map(
@@ -75,6 +86,10 @@ const useDataRequest = () => {
         localStorage.setItem("planets", JSON.stringify(uniquePlanets));
         return uniquePlanets;
       });
+
+      if (data.next) {
+        await fetchPlanets(data.next);
+      }
     } catch (error) {
       setError((error as Error).message);
     } finally {
@@ -82,8 +97,79 @@ const useDataRequest = () => {
     }
   };
 
+  const fetchPeople = async (url: string) => {
+    try {
+      const cachedPeople: Person[] = JSON.parse(
+        localStorage.getItem("people") as any
+      );
+      const cachedPeopleCount = parseInt(
+        localStorage.getItem("peopleCount") || "0"
+      );
+
+      if (cachedPeople?.length >= cachedPeopleCount) {
+        setPeople(cachedPeople);
+        return;
+      }
+
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      const peopleData = data.results;
+
+      localStorage.setItem("peopleCount", data.count.toString());
+      const random = Math.floor(Math.random() * 100);
+      const enrichedPeopleData: Person[] =
+        peopleData.map(
+          (
+            {
+              url,
+              name,
+              homeworld,
+              gender,
+              mass,
+              height,
+            }: {
+              url: string;
+              name: string;
+              homeworld: string;
+              mass: string;
+              height: string;
+              gender: string;
+            },
+            idx: number
+          ) => ({
+            id: url,
+            name,
+            homeworld,
+            gender,
+            mass,
+            height,
+            image: `https://picsum.photos/450/240?random=${idx}`,
+          })
+        ) || [];
+
+      setPeople((prevPeople) => {
+        const allPeople = [...prevPeople, ...enrichedPeopleData];
+        const uniquePeople = Array.from(
+          new Map(allPeople.map((p) => [p.id, p])).values()
+        );
+        localStorage.setItem("people", JSON.stringify(uniquePeople));
+        return uniquePeople;
+      });
+
+      if (data.next) {
+        await fetchPeople(data.next);
+      }
+    } catch (error) {
+      setError((error as Error).message);
+    }
+  };
   return {
     planets,
+    people,
     loading,
     error,
   };
