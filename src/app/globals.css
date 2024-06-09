@@ -16,6 +16,13 @@
   }
 }
 
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('https://fonts.cdnfonts.com/css/helvetica-neue-55') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(to bottom,
@@ -44,7 +51,6 @@ h2 {
   font-weight: 300;
   line-height: 40px;
 
-
 }
 
 h4 {
@@ -62,7 +68,6 @@ h5 {
   letter-spacing: 1px;
   text-align: left;
 }
-
 
 
 label {
@@ -84,13 +89,23 @@ label {
   text-transform: uppercase;
 }
 
+.clearall:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
 .loadmore {
   font-family: Arial;
   font-size: 14px;
   font-weight: 400;
   line-height: 46px;
   text-align: center;
-  color: #002B53
+  color: #002B53;
+  text-transform: uppercase;
+}
+
+.loadmore:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .p-item {

@@ -13,7 +13,7 @@ const ResponsiveItem: React.FC<ItemProps> = ({ person }) => {
   return (
     <>
       {/* Mobile View */}
-      <div className="lg:hidden flex flex-row pr-[59px] ">
+      <div className="md:hidden flex flex-row pr-[59px] ">
         <Image
           className="w-auto pr-3 pb-4"
           src={person.image}
@@ -28,9 +28,9 @@ const ResponsiveItem: React.FC<ItemProps> = ({ person }) => {
       </div>
 
       {/* Desktop View */}
-      <div className="hidden lg:grid lg:pb-[110px]">
+      <div className="hidden md:grid md:pb-[110px]">
         <Image
-          className="w-full pr-3 pb-4"
+          className="w-9/12 h-auto pr-3 pb-4 2xl:w-full"
           src={person.image}
           alt="image"
           width={115}
