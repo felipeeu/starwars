@@ -31,7 +31,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main className="flex flex-col  gap-[28px]">
       <Header title={HEADER_TITLE} body={HEADER_BODY} />
       <FilterComponent
         label={FILTER_COMPONENT_LABEL}

@@ -2,6 +2,7 @@
 import useDataRequest, { Person } from "@/app/hooks/useDataRequest";
 import { ResponsiveItem } from "../ItemCard";
 import { MouseEventHandler } from "react";
+import { Loader } from "../Loader";
 
 interface ItemListProps {
   title: string;
@@ -21,10 +22,6 @@ const ItemList: React.FC<ItemListProps> = ({
   const { people, loading, error } = useDataRequest();
   const isDefaultValue = selectedPlanet === defaultValue;
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -34,22 +31,28 @@ const ItemList: React.FC<ItemListProps> = ({
         {title}
       </h2>
       <div className="lg:grid lg:grid-cols-4">
-        {people
-          .filter((person: Person) =>
-            isDefaultValue ? person : person.homeworld === selectedPlanet
-          )
-          .slice(0, visibleItems)
-          .map((person: Person) => (
-            <div key={person.name}>
-              <ResponsiveItem person={person} />
-            </div>
-          ))}
+        {loading ? (
+          <Loader />
+        ) : (
+          people
+            .filter((person: Person) =>
+              isDefaultValue ? person : person.homeworld === selectedPlanet
+            )
+            .slice(0, visibleItems)
+            .map((person: Person) => {
+              return (
+                <div key={person.name}>
+                  <ResponsiveItem person={person} />
+                </div>
+              );
+            })
+        )}
       </div>
       <button
         className="min-w-[196px] border border-[#002B53] self-center lg:min-w-[496px]"
         onClick={onClick}
       >
-        <span className="loadmore uppercase text-[#002B53]">load more</span>
+        <span className="loadmore uppercase text-[#002B53] ">load more</span>
       </button>
     </div>
   );
