@@ -20,10 +20,6 @@ const config: Config = {
         "34": "34px",
       },
     },
-    screens: {
-      sm: "640px", // Small screens
-      lg: "1280px", // Large screens
-    },
   },
   plugins: [],
 };

@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Header } from "./Components";
-
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,13 +20,6 @@ export default function RootLayout({
         className={`${inter.className} flex flex-col bg-white gap-[28px]`}
         suppressHydrationWarning={true}
       >
-        <Header
-          title={"Star Wars Characters"}
-          body={`Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.`}
-        />
-
         {children}
       </body>
     </html>
