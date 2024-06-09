@@ -1,4 +1,10 @@
-# Star Wars Challenge
+
+<img src="/public/vercel.svg" alt="Dart Vader" width="30%" />
+
+# Star Wars Challenge   
+
+> May the Force be with you.
+
 ## Overview
 
 This project is a simple web application built with [Next.js](https://nextjs.org/) that interacts with the [Star Wars API](https://swapi.dev/). The application allows users to read records related to Star Wars entities.
